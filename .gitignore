@@ -1,0 +1,57 @@
+# Gradle files
+.gradle/
+build/
+**/build/
+
+# Local configuration file (SDK path, etc.)
+local.properties
+
+# Log/OS Files
+*.log
+.DS_Store
+Thumbs.db
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.aab
+*.apk
+*.ap_
+*.dm
+output-metadata.json
+
+# IntelliJ / Android Studio
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
+
+# Kotlin
+.kotlin/
+
+# Native build outputs
+obj/
+
+# Signing / secrets
+keystore.properties
+*.pem
+*.p12
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
