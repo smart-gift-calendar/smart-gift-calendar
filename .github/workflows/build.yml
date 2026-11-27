@@ -28,6 +28,15 @@ jobs:
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
 
+      - name: Record Paparazzi screenshots
+        run: gradle recordPaparazziDebug --stacktrace
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: app/src/test/snapshots
+
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
