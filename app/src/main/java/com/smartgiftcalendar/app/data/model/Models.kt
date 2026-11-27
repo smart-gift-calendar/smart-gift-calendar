@@ -29,13 +29,20 @@ data class Gift(
     val price: Double
 )
 
+enum class OrderStatus(val label: String) {
+    PENDING("Pending"),
+    PROCESSING("Processing"),
+    DELIVERED("Delivered")
+}
+
 data class Order(
     val id: String = UUID.randomUUID().toString(),
     val customerName: String,
     val gift: Gift,
     val recipientName: String,
     val discountPercent: Int = 0,
-    val createdAt: LocalDate = LocalDate.now()
+    val createdAt: LocalDate = LocalDate.now(),
+    val status: OrderStatus = OrderStatus.PENDING
 ) {
     val subtotal: Double get() = gift.price
     val discountAmount: Double get() = subtotal * discountPercent / 100.0
@@ -46,7 +53,8 @@ data class DiscountCode(
     val code: String,
     val percent: Int,
     val createdBy: String = "Admin",
-    val active: Boolean = true
+    val active: Boolean = true,
+    val expiryDate: LocalDate = LocalDate.now().plusMonths(3)
 )
 
 data class CompanyEvent(

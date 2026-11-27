@@ -9,6 +9,7 @@ import com.smartgiftcalendar.app.data.model.CompanyEventType
 import com.smartgiftcalendar.app.data.model.DiscountCode
 import com.smartgiftcalendar.app.data.model.Gift
 import com.smartgiftcalendar.app.data.model.Order
+import com.smartgiftcalendar.app.data.model.OrderStatus
 import com.smartgiftcalendar.app.data.model.UserProfile
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -113,10 +114,33 @@ object FakeRepository {
         gifts.add(Gift(name = name, description = description, price = price))
     }
 
-    fun addDiscountCode(code: String, percent: Int) {
+    // Update an existing gift by id.
+    fun updateGift(id: String, name: String, description: String, price: Double) {
+        val index = gifts.indexOfFirst { it.id == id }
+        if (index >= 0) {
+            gifts[index] = gifts[index].copy(name = name, description = description, price = price)
+        }
+    }
+
+    // Delete a gift from the fake list.
+    fun deleteGift(id: String) {
+        gifts.removeAll { it.id == id }
+    }
+
+    fun addDiscountCode(code: String, percent: Int, expiryDate: LocalDate) {
         val normalized = code.trim().uppercase()
         if (normalized.isNotEmpty() && discountCodes.none { it.code == normalized }) {
-            discountCodes.add(DiscountCode(code = normalized, percent = percent, createdBy = "Admin"))
+            discountCodes.add(
+                DiscountCode(code = normalized, percent = percent, createdBy = "Admin", expiryDate = expiryDate)
+            )
+        }
+    }
+
+    // Change order status from the admin panel.
+    fun updateOrderStatus(orderId: String, status: OrderStatus) {
+        val index = orders.indexOfFirst { it.id == orderId }
+        if (index >= 0) {
+            orders[index] = orders[index].copy(status = status)
         }
     }
 
