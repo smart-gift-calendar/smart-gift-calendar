@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.FakeRepository
 
 object ReminderNotifier {
