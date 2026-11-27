@@ -7,6 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import com.smartgiftcalendar.app.notifications.ReminderNotifier
 import com.smartgiftcalendar.app.ui.SmartGiftApp
 import com.smartgiftcalendar.app.ui.theme.SmartGiftCalendarTheme
@@ -27,8 +30,11 @@ class MainActivity : ComponentActivity() {
             ReminderNotifier.showDueReminders(this)
         }
         setContent {
-            SmartGiftCalendarTheme {
-                SmartGiftApp()
+            // Apply RTL layout direction across the whole app.
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                SmartGiftCalendarTheme {
+                    SmartGiftApp()
+                }
             }
         }
     }

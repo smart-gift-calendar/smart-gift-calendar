@@ -1,17 +1,18 @@
 package com.smartgiftcalendar.app.data.model
 
+import com.smartgiftcalendar.app.R
 import java.time.LocalDate
 import java.util.UUID
 
-enum class BirthdayRelation(val label: String) {
-    SELF("Self"),
-    FAMILY("Family"),
-    FRIEND("Friend")
+enum class BirthdayRelation(val labelRes: Int) {
+    SELF(R.string.relation_self),
+    FAMILY(R.string.relation_family),
+    FRIEND(R.string.relation_friend)
 }
 
-enum class CompanyEventType(val label: String) {
-    BIRTHDAY("Birthday"),
-    ANNIVERSARY("Anniversary")
+enum class CompanyEventType(val labelRes: Int) {
+    BIRTHDAY(R.string.event_birthday),
+    ANNIVERSARY(R.string.event_anniversary)
 }
 
 data class BirthdayEntry(
@@ -29,10 +30,10 @@ data class Gift(
     val price: Double
 )
 
-enum class OrderStatus(val label: String) {
-    PENDING("Pending"),
-    PROCESSING("Processing"),
-    DELIVERED("Delivered")
+enum class OrderStatus(val labelRes: Int) {
+    PENDING(R.string.status_pending),
+    PROCESSING(R.string.status_processing),
+    DELIVERED(R.string.status_delivered)
 }
 
 data class Order(

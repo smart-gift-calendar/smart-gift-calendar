@@ -1,12 +1,13 @@
 package com.smartgiftcalendar.app.data
 
 import androidx.compose.runtime.mutableStateOf
+import com.smartgiftcalendar.app.R
 
 // Simple roles for fake local authentication.
-enum class UserRole(val label: String) {
-    USER("Normal User"),
-    ADMIN("Shop Admin"),
-    COMPANY("Company Manager")
+enum class UserRole(val labelRes: Int) {
+    USER(R.string.role_user),
+    ADMIN(R.string.role_admin),
+    COMPANY(R.string.role_company)
 }
 
 // Fake account used only for local demo login.

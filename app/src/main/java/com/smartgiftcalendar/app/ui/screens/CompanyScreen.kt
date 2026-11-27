@@ -27,7 +27,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.FakeRepository
 import com.smartgiftcalendar.app.data.model.CompanyEventType
 import com.smartgiftcalendar.app.data.model.Gift
@@ -45,63 +47,67 @@ fun CompanyScreen() {
     var recipientName by remember { mutableStateOf("") }
     var message by remember { mutableStateOf<String?>(null) }
 
+    val invalidCompanyEventError = stringResource(R.string.invalid_company_event_error)
+    val employeeEventAdded = stringResource(R.string.employee_event_added)
+    val companyOrderError = stringResource(R.string.company_order_error)
+
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            Text("Company Panel", style = MaterialTheme.typography.headlineMedium)
-            Text("Manage employee birthdays/anniversaries and order gifts.")
+            Text(stringResource(R.string.company_panel_title), style = MaterialTheme.typography.headlineMedium)
+            Text(stringResource(R.string.company_panel_subtitle))
         }
 
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Add employee event", style = MaterialTheme.typography.titleMedium)
-                    OutlinedTextField(value = companyName, onValueChange = { companyName = it }, label = { Text("Company name") }, modifier = Modifier.fillMaxWidth())
-                    OutlinedTextField(value = employeeName, onValueChange = { employeeName = it }, label = { Text("Employee name") }, modifier = Modifier.fillMaxWidth())
+                    Text(stringResource(R.string.add_employee_event), style = MaterialTheme.typography.titleMedium)
+                    OutlinedTextField(value = companyName, onValueChange = { companyName = it }, label = { Text(stringResource(R.string.company_name)) }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(value = employeeName, onValueChange = { employeeName = it }, label = { Text(stringResource(R.string.employee_name)) }, modifier = Modifier.fillMaxWidth())
                     ExposedDropdownMenuBox(expanded = typeExpanded, onExpandedChange = { typeExpanded = !typeExpanded }) {
                         OutlinedTextField(
-                            value = eventType.label,
+                            value = stringResource(eventType.labelRes),
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Event type") },
+                            label = { Text(stringResource(R.string.event_type)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = typeExpanded) },
                             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
                         )
                         ExposedDropdownMenu(expanded = typeExpanded, onDismissRequest = { typeExpanded = false }) {
                             CompanyEventType.entries.forEach { option ->
-                                DropdownMenuItem(text = { Text(option.label) }, onClick = { eventType = option; typeExpanded = false })
+                                DropdownMenuItem(text = { Text(stringResource(option.labelRes)) }, onClick = { eventType = option; typeExpanded = false })
                             }
                         }
                     }
-                    OutlinedTextField(value = dateText, onValueChange = { dateText = it }, label = { Text("Date (YYYY-MM-DD)") }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(value = dateText, onValueChange = { dateText = it }, label = { Text(stringResource(R.string.date_yyyy_mm_dd)) }, modifier = Modifier.fillMaxWidth())
                     Button(onClick = {
                         val date = runCatching { LocalDate.parse(dateText.trim()) }.getOrNull()
                         if (companyName.isBlank() || employeeName.isBlank() || date == null) {
-                            message = "Enter company, employee, and valid date."
+                            message = invalidCompanyEventError
                         } else {
                             FakeRepository.addCompanyEvent(employeeName.trim(), eventType, date, companyName.trim())
                             employeeName = ""; dateText = ""
-                            message = "Employee event added."
+                            message = employeeEventAdded
                         }
-                    }) { Text("Add event") }
+                    }) { Text(stringResource(R.string.add_event)) }
                 }
             }
         }
 
-        item { Text("Employee events", style = MaterialTheme.typography.titleLarge) }
+        item { Text(stringResource(R.string.employee_events), style = MaterialTheme.typography.titleLarge) }
         items(FakeRepository.companyEvents, key = { it.id }) { event ->
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("${event.employeeName} — ${event.type.label}", style = MaterialTheme.typography.titleMedium)
-                    Text("Company: ${event.companyName}")
-                    Text("Date: ${event.date}")
+                    Text("${event.employeeName} — ${stringResource(event.type.labelRes)}", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.company_label, event.companyName))
+                    Text(stringResource(R.string.date_label, event.date.toString()))
                 }
             }
         }
 
-        item { Text("Order gift for company event", style = MaterialTheme.typography.titleLarge) }
+        item { Text(stringResource(R.string.order_gift_company_event), style = MaterialTheme.typography.titleLarge) }
         items(FakeRepository.gifts, key = { "cg-${it.id}" }) { gift ->
             Card(modifier = Modifier.fillMaxWidth()) {
                 Row(modifier = Modifier.padding(12.dp)) {
@@ -117,17 +123,20 @@ fun CompanyScreen() {
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(value = recipientName, onValueChange = { recipientName = it }, label = { Text("Recipient employee") }, modifier = Modifier.fillMaxWidth())
-                    message?.let { Text(it, color = MaterialTheme.colorScheme.primary) }
+                    OutlinedTextField(value = recipientName, onValueChange = { recipientName = it }, label = { Text(stringResource(R.string.recipient_employee)) }, modifier = Modifier.fillMaxWidth())
+                    message?.let { msg ->
+                        val text = if (msg.startsWith("OK:")) stringResource(R.string.company_order_placed, msg.removePrefix("OK:")) else msg
+                        Text(text, color = MaterialTheme.colorScheme.primary)
+                    }
                     Button(onClick = {
                         val gift = selectedGift
                         if (gift == null || recipientName.isBlank() || companyName.isBlank()) {
-                            message = "Select a gift and enter recipient/company."
+                            message = companyOrderError
                         } else {
                             val order = FakeRepository.placeCompanyOrder(companyName.trim(), gift, recipientName.trim())
-                            message = "Company order placed! Total: $${"%.2f".format(order.total)}"
+                            message = "OK:$${"%.2f".format(order.total)}"
                         }
-                    }, modifier = Modifier.fillMaxWidth()) { Text("Place company order") }
+                    }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.place_company_order)) }
                 }
             }
         }

@@ -12,11 +12,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.AuthRepository
 import com.smartgiftcalendar.app.data.UserRole
 import com.smartgiftcalendar.app.ui.screens.AdminScreen
@@ -53,7 +55,7 @@ private fun AuthenticatedApp() {
                     title = { Text(routeTitle(route)) },
                     navigationIcon = {
                         IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
                     }
                 )
@@ -91,14 +93,15 @@ private fun AuthenticatedApp() {
 
 @Composable
 private fun AccessDenied() {
-    Text("Access denied.", modifier = Modifier.padding(16.dp))
+    Text(stringResource(R.string.access_denied), modifier = Modifier.padding(16.dp))
 }
 
+@Composable
 private fun routeTitle(route: String?): String = when (route) {
-    "calendar" -> "Calendar"
-    "invite" -> "Invite link"
-    "shop" -> "Shop"
-    "admin" -> "Admin panel"
-    "company" -> "Company panel"
-    else -> "Smart Gift Calendar"
+    "calendar" -> stringResource(R.string.calendar)
+    "invite" -> stringResource(R.string.invite_link)
+    "shop" -> stringResource(R.string.shop)
+    "admin" -> stringResource(R.string.admin_panel)
+    "company" -> stringResource(R.string.company_panel)
+    else -> stringResource(R.string.app_name)
 }

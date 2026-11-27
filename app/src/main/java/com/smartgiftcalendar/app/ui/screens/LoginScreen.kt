@@ -17,8 +17,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.AuthRepository
 
 @Composable
@@ -26,6 +28,7 @@ fun LoginScreen() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
+    val wrongCredentials = stringResource(R.string.wrong_credentials)
 
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
@@ -34,21 +37,21 @@ fun LoginScreen() {
     ) {
         Card(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("Smart Gift Calendar", style = MaterialTheme.typography.headlineMedium)
-                Text("Login to continue", style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(R.string.login_title), style = MaterialTheme.typography.headlineMedium)
+                Text(stringResource(R.string.login_subtitle), style = MaterialTheme.typography.bodyMedium)
 
                 // Fake local login fields.
                 OutlinedTextField(
                     value = username,
                     onValueChange = { username = it },
-                    label = { Text("Username") },
+                    label = { Text(stringResource(R.string.username)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password") },
+                    label = { Text(stringResource(R.string.password)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation()
@@ -62,11 +65,11 @@ fun LoginScreen() {
                 Button(
                     onClick = {
                         val ok = AuthRepository.login(username, password)
-                        error = if (ok) null else "Wrong username or password."
+                        error = if (ok) null else wrongCredentials
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Login")
+                    Text(stringResource(R.string.login))
                 }
             }
         }

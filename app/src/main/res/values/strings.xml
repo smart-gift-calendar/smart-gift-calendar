@@ -1,3 +1,164 @@
 <resources>
-    <string name="app_name">Smart Gift Calendar</string>
+    <string name="app_name">تقویم هوشمند هدیه</string>
+
+    <!-- Common -->
+    <string name="back">بازگشت</string>
+    <string name="access_denied">دسترسی غیرمجاز است.</string>
+
+    <!-- Login -->
+    <string name="login_title">تقویم هوشمند هدیه</string>
+    <string name="login_subtitle">برای ادامه وارد شوید</string>
+    <string name="username">نام کاربری</string>
+    <string name="password">رمز عبور</string>
+    <string name="login">ورود</string>
+    <string name="wrong_credentials">نام کاربری یا رمز عبور اشتباه است.</string>
+
+    <!-- Roles -->
+    <string name="role_user">کاربر عادی</string>
+    <string name="role_admin">مدیر فروشگاه</string>
+    <string name="role_company">مدیر شرکت</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard">داشبورد</string>
+    <string name="welcome_user">خوش آمدید، %1$s!</string>
+    <string name="role_label">نقش: %1$s</string>
+    <string name="calendar">تقویم</string>
+    <string name="calendar_desc">مشاهده تولدها و یادآوری‌های پیش رو</string>
+    <string name="invite_link">لینک دعوت</string>
+    <string name="invite_link_desc">لینک دعوت خود را با دوستان به اشتراک بگذارید</string>
+    <string name="shop">فروشگاه</string>
+    <string name="shop_desc">مرور هدیه‌ها و ثبت سفارش</string>
+    <string name="admin_panel">پنل مدیریت</string>
+    <string name="admin_panel_desc">مدیریت سفارش‌ها، هدیه‌ها و کدهای تخفیف</string>
+    <string name="company_panel">پنل شرکت</string>
+    <string name="company_panel_desc">مدیریت رویدادهای کارکنان و سفارش‌های شرکتی</string>
+    <string name="logout">خروج</string>
+
+    <!-- Calendar -->
+    <string name="smart_calendar">تقویم هوشمند</string>
+    <string name="upcoming_birthdays_reminders">تولدها و یادآوری‌های پیش رو</string>
+    <string name="reminders">یادآوری‌ها</string>
+    <string name="upcoming_events">رویدادهای پیش رو</string>
+    <string name="close">بستن</string>
+    <string name="add_birthday">افزودن تولد</string>
+    <string name="register_birthday">ثبت تولد</string>
+    <string name="name">نام</string>
+    <string name="relation">نسبت</string>
+    <string name="date_yyyy_mm_dd">تاریخ (YYYY-MM-DD)</string>
+    <string name="note">یادداشت</string>
+    <string name="name_required">نام الزامی است.</string>
+    <string name="date_format_error">فرمت تاریخ باید YYYY-MM-DD باشد.</string>
+    <string name="save_birthday">ذخیره تولد</string>
+    <string name="date_label">تاریخ: %1$s</string>
+    <string name="today_reminder">امروز! یادآوری در روز تولد ارسال شد.</string>
+    <string name="in_three_days_reminder">۳ روز دیگر — یادآوری زمان‌بندی شد.</string>
+    <string name="in_days">%1$d روز دیگر</string>
+    <string name="note_label">یادداشت: %1$s</string>
+
+    <!-- Relations -->
+    <string name="relation_self">خودم</string>
+    <string name="relation_family">خانواده</string>
+    <string name="relation_friend">دوست</string>
+
+    <!-- Invite -->
+    <string name="invite_friends">دعوت از دوستان</string>
+    <string name="invite_friends_desc">لینک دعوت شخصی خود را به اشتراک بگذارید. دوستانی که عضو شوند کد تخفیف ۱۰٪ دریافت می‌کنند.</string>
+    <string name="your_invite_link">لینک دعوت شما</string>
+    <string name="invite_code_label">کد دعوت: %1$s</string>
+    <string name="friend10_received">شما برای ثبت‌نام از طریق دعوت، تخفیف FRIEND10 دریافت کردید.</string>
+    <string name="friend_registers">دوست از طریق لینک ثبت‌نام می‌کند</string>
+    <string name="invite_code">کد دعوت</string>
+    <string name="friend_name">نام دوست</string>
+    <string name="friend_birthday">تولد دوست (YYYY-MM-DD)</string>
+    <string name="friend_name_required">نام دوست الزامی است.</string>
+    <string name="friend_registered">ثبت شد! %1$s اضافه شد و تخفیف FRIEND10 فعال است.</string>
+    <string name="invalid_invite_code">کد دعوت نامعتبر است.</string>
+    <string name="register_friend">ثبت دوست</string>
+    <string name="recent_invite_registrations">ثبت‌نام‌های اخیر دعوت</string>
+    <string name="no_registrations">هنوز ثبت‌نامی انجام نشده است.</string>
+    <string name="invite_registration_item">%1$s با کد %2$s ثبت‌نام کرد</string>
+
+    <!-- Shop -->
+    <string name="gift_shop">فروشگاه هدیه</string>
+    <string name="gift_shop_desc">هدیه را انتخاب کنید، قیمت را برآورد کنید و سفارش ثبت کنید.</string>
+    <string name="invite_discount_available">تخفیف دعوت فعال: %1$s (%2$d٪ تخفیف)</string>
+    <string name="order_details">جزئیات سفارش</string>
+    <string name="your_name">نام شما</string>
+    <string name="recipient">گیرنده</string>
+    <string name="discount_code">کد تخفیف</string>
+    <string name="price_estimate">برآورد قیمت</string>
+    <string name="subtotal">جمع جزء: %1$s</string>
+    <string name="discount">تخفیف: %1$d٪ (-%2$s)</string>
+    <string name="total">جمع کل: %1$s</string>
+    <string name="select_gift_error">یک هدیه انتخاب کنید.</string>
+    <string name="enter_name_recipient_error">نام خود و گیرنده را وارد کنید.</string>
+    <string name="order_placed">سفارش ثبت شد! جمع کل: %1$s</string>
+    <string name="place_order">ثبت سفارش</string>
+
+    <!-- Admin -->
+    <string name="admin_panel_title">پنل مدیریت</string>
+    <string name="admin_panel_subtitle">مدیریت سفارش‌ها، هدیه‌ها و کدهای تخفیف.</string>
+    <string name="orders">سفارش‌ها</string>
+    <string name="gifts">هدیه‌ها</string>
+    <string name="discount_codes">کدهای تخفیف</string>
+    <string name="gift_for_recipient">%1$s برای %2$s</string>
+    <string name="customer_label">مشتری: %1$s</string>
+    <string name="final_price">قیمت نهایی: %1$s</string>
+    <string name="status_label">وضعیت: %1$s</string>
+    <string name="change_status">تغییر وضعیت</string>
+    <string name="add_gift">افزودن هدیه</string>
+    <string name="edit_gift">ویرایش هدیه</string>
+    <string name="gift_name">نام هدیه</string>
+    <string name="description">توضیحات</string>
+    <string name="price">قیمت</string>
+    <string name="invalid_gift_error">نام، توضیحات و قیمت معتبر وارد کنید.</string>
+    <string name="gift_added">هدیه اضافه شد.</string>
+    <string name="gift_updated">هدیه به‌روزرسانی شد.</string>
+    <string name="save_changes">ذخیره تغییرات</string>
+    <string name="cancel">انصراف</string>
+    <string name="edit">ویرایش</string>
+    <string name="delete">حذف</string>
+    <string name="create_discount_code">ایجاد کد تخفیف</string>
+    <string name="code">کد</string>
+    <string name="percent">درصد</string>
+    <string name="expiry_date_yyyy_mm_dd">تاریخ انقضا (YYYY-MM-DD)</string>
+    <string name="invalid_discount_error">کد، درصد (۱ تا ۱۰۰) و تاریخ انقضای معتبر وارد کنید.</string>
+    <string name="discount_code_created">کد تخفیف ایجاد شد.</string>
+    <string name="create_code">ایجاد کد</string>
+    <string name="discount_code_item">%1$s — %2$d٪</string>
+    <string name="expiry_date_label">تاریخ انقضا: %1$s</string>
+
+    <!-- Company -->
+    <string name="company_panel_title">پنل شرکت</string>
+    <string name="company_panel_subtitle">مدیریت تولدها/سالگردهای کارکنان و سفارش هدیه.</string>
+    <string name="add_employee_event">افزودن رویداد کارمند</string>
+    <string name="company_name">نام شرکت</string>
+    <string name="employee_name">نام کارمند</string>
+    <string name="event_type">نوع رویداد</string>
+    <string name="add_event">افزودن رویداد</string>
+    <string name="invalid_company_event_error">نام شرکت، کارمند و تاریخ معتبر وارد کنید.</string>
+    <string name="employee_event_added">رویداد کارمند اضافه شد.</string>
+    <string name="employee_events">رویدادهای کارکنان</string>
+    <string name="company_label">شرکت: %1$s</string>
+    <string name="order_gift_company_event">سفارش هدیه برای رویداد شرکتی</string>
+    <string name="recipient_employee">کارمند گیرنده</string>
+    <string name="company_order_error">هدیه را انتخاب کنید و گیرنده/شرکت را وارد کنید.</string>
+    <string name="company_order_placed">سفارش شرکتی ثبت شد! جمع کل: %1$s</string>
+    <string name="place_company_order">ثبت سفارش شرکتی</string>
+
+    <!-- Event types -->
+    <string name="event_birthday">تولد</string>
+    <string name="event_anniversary">سالگرد</string>
+
+    <!-- Order status -->
+    <string name="status_pending">در انتظار</string>
+    <string name="status_processing">در حال پردازش</string>
+    <string name="status_delivered">تحویل شده</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">یادآوری تولد</string>
+    <string name="notification_channel_desc">یادآوری ۳ روز قبل و در روز تولد</string>
+    <string name="notification_title">تقویم هوشمند هدیه</string>
+    <string name="reminder_today">امروز تولد %1$s است!</string>
+    <string name="reminder_three_days">یادآوری: ۳ روز تا تولد %1$s باقی مانده است.</string>
 </resources>

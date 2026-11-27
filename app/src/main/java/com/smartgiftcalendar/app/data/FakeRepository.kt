@@ -47,7 +47,7 @@ object FakeRepository {
         CompanyEvent(employeeName = "James Lee", type = CompanyEventType.ANNIVERSARY, date = LocalDate.now().plusDays(14), companyName = "Acme Inc")
     )
 
-    val inviteRegistrations = mutableStateListOf<String>()
+    val inviteRegistrations = mutableStateListOf<Pair<String, String>>() // name, invite code
 
     fun addBirthday(name: String, relation: BirthdayRelation, date: LocalDate, note: String) {
         birthdays.add(BirthdayEntry(name = name, relation = relation, date = date, note = note))
@@ -69,11 +69,11 @@ object FakeRepository {
         return if (next.isBefore(today)) next.plusYears(1) else next
     }
 
-    fun remindersForToday(): List<Pair<BirthdayEntry, String>> {
+    // Returns birthday entries that need a reminder today (0 or 3 days left).
+    fun remindersForToday(): List<Pair<BirthdayEntry, Long>> {
         return birthdays.mapNotNull { entry ->
-            when (daysUntil(entry.date)) {
-                0L -> entry to "Today is ${entry.name}'s birthday!"
-                3L -> entry to "Reminder: ${entry.name}'s birthday is in 3 days."
+            when (val days = daysUntil(entry.date)) {
+                0L, 3L -> entry to days
                 else -> null
             }
         }
@@ -83,7 +83,7 @@ object FakeRepository {
         val normalized = inviteCode.trim().uppercase()
         val valid = normalized.isNotBlank() && normalized == currentUser.value.inviteCode.uppercase()
         if (valid) {
-            inviteRegistrations.add("$friendName joined with $normalized")
+            inviteRegistrations.add(friendName to normalized)
             currentUser.value = currentUser.value.copy(hasInviteDiscount = true)
             if (discountCodes.none { it.code == "FRIEND10" }) {
                 discountCodes.add(DiscountCode(code = "FRIEND10", percent = 10, createdBy = "Invite"))

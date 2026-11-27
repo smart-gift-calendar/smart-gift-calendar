@@ -22,7 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.FakeRepository
 import com.smartgiftcalendar.app.data.model.Gift
 
@@ -33,6 +35,9 @@ fun ShopScreen() {
     var recipientName by remember { mutableStateOf("") }
     var discountCode by remember { mutableStateOf(FakeRepository.availableDiscountForUser()?.code ?: "") }
     var message by remember { mutableStateOf<String?>(null) }
+
+    val selectGiftError = stringResource(R.string.select_gift_error)
+    val enterNameRecipientError = stringResource(R.string.enter_name_recipient_error)
 
     val discount = discountCode.trim().uppercase().takeIf { it.isNotEmpty() }
         ?.let { code -> FakeRepository.discountCodes.firstOrNull { it.code.equals(code, true) && it.active } }
@@ -45,11 +50,11 @@ fun ShopScreen() {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            Text("Gift Shop", style = MaterialTheme.typography.headlineMedium)
-            Text("Choose a gift, estimate price, and place an order.", style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.gift_shop), style = MaterialTheme.typography.headlineMedium)
+            Text(stringResource(R.string.gift_shop_desc), style = MaterialTheme.typography.bodyMedium)
             FakeRepository.availableDiscountForUser()?.let {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Invite discount available: ${it.code} (${it.percent}% off)")
+                Text(stringResource(R.string.invite_discount_available, it.code, it.percent))
             }
         }
 
@@ -69,29 +74,32 @@ fun ShopScreen() {
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Order details", style = MaterialTheme.typography.titleMedium)
-                    OutlinedTextField(value = customerName, onValueChange = { customerName = it }, label = { Text("Your name") }, modifier = Modifier.fillMaxWidth())
-                    OutlinedTextField(value = recipientName, onValueChange = { recipientName = it }, label = { Text("Recipient") }, modifier = Modifier.fillMaxWidth())
-                    OutlinedTextField(value = discountCode, onValueChange = { discountCode = it }, label = { Text("Discount code") }, modifier = Modifier.fillMaxWidth())
-                    Text("Price estimate", style = MaterialTheme.typography.titleSmall)
-                    Text("Subtotal: $${"%.2f".format(estimate)}")
-                    Text("Discount: ${discount?.percent ?: 0}% (-$${"%.2f".format(discountAmount)})")
-                    Text("Total: $${"%.2f".format(total)}", style = MaterialTheme.typography.titleMedium)
-                    message?.let { Text(it, color = MaterialTheme.colorScheme.primary) }
+                    Text(stringResource(R.string.order_details), style = MaterialTheme.typography.titleMedium)
+                    OutlinedTextField(value = customerName, onValueChange = { customerName = it }, label = { Text(stringResource(R.string.your_name)) }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(value = recipientName, onValueChange = { recipientName = it }, label = { Text(stringResource(R.string.recipient)) }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(value = discountCode, onValueChange = { discountCode = it }, label = { Text(stringResource(R.string.discount_code)) }, modifier = Modifier.fillMaxWidth())
+                    Text(stringResource(R.string.price_estimate), style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(R.string.subtotal, "$${"%.2f".format(estimate)}"))
+                    Text(stringResource(R.string.discount, discount?.percent ?: 0, "$${"%.2f".format(discountAmount)}"))
+                    Text(stringResource(R.string.total, "$${"%.2f".format(total)}"), style = MaterialTheme.typography.titleMedium)
+                    message?.let { msg ->
+                        val text = if (msg.startsWith("OK:")) stringResource(R.string.order_placed, msg.removePrefix("OK:")) else msg
+                        Text(text, color = MaterialTheme.colorScheme.primary)
+                    }
                     Button(
                         onClick = {
                             val gift = selectedGift
                             when {
-                                gift == null -> message = "Select a gift."
-                                customerName.isBlank() || recipientName.isBlank() -> message = "Enter your name and recipient."
+                                gift == null -> message = selectGiftError
+                                customerName.isBlank() || recipientName.isBlank() -> message = enterNameRecipientError
                                 else -> {
                                     val order = FakeRepository.placeOrder(customerName.trim(), gift, recipientName.trim(), discountCode)
-                                    message = "Order placed! Total: $${"%.2f".format(order.total)}"
+                                    message = "OK:$${"%.2f".format(order.total)}"
                                 }
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
-                    ) { Text("Place order") }
+                    ) { Text(stringResource(R.string.place_order)) }
                 }
             }
         }

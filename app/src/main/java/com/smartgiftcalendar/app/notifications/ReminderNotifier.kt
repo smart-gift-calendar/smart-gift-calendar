@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.FakeRepository
 
 object ReminderNotifier {
@@ -21,10 +22,16 @@ object ReminderNotifier {
         if (!hasPermission) return
 
         val manager = NotificationManagerCompat.from(context)
-        FakeRepository.remindersForToday().forEachIndexed { index, (_, message) ->
+        FakeRepository.remindersForToday().forEachIndexed { index, (entry, days) ->
+            // Localized reminder text for 3 days before or birthday day.
+            val message = if (days == 0L) {
+                context.getString(R.string.reminder_today, entry.name)
+            } else {
+                context.getString(R.string.reminder_three_days, entry.name)
+            }
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_menu_my_calendar)
-                .setContentTitle("Smart Gift Calendar")
+                .setContentTitle(context.getString(R.string.notification_title))
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
@@ -37,10 +44,10 @@ object ReminderNotifier {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Birthday Reminders",
+                context.getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Reminders 3 days before and on birthdays"
+                description = context.getString(R.string.notification_channel_desc)
             }
             val manager = context.getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)

@@ -13,7 +13,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.smartgiftcalendar.app.R
 import com.smartgiftcalendar.app.data.AuthRepository
 import com.smartgiftcalendar.app.data.UserRole
 
@@ -32,27 +34,27 @@ fun DashboardScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            Text("Dashboard", style = MaterialTheme.typography.headlineMedium)
+            Text(stringResource(R.string.dashboard), style = MaterialTheme.typography.headlineMedium)
             // Welcome message with name and role.
-            Text("Welcome, ${account.displayName}!", style = MaterialTheme.typography.titleLarge)
-            Text("Role: ${account.role.label}", style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.welcome_user, account.displayName), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(R.string.role_label, stringResource(account.role.labelRes)), style = MaterialTheme.typography.bodyMedium)
         }
 
-        item { DashboardCard("Calendar", "View upcoming birthdays and reminders", onOpenCalendar) }
-        item { DashboardCard("Invite link", "Share your invite link with friends", onOpenInvite) }
-        item { DashboardCard("Shop", "Browse gifts and place orders", onOpenShop) }
+        item { DashboardCard(stringResource(R.string.calendar), stringResource(R.string.calendar_desc), onOpenCalendar) }
+        item { DashboardCard(stringResource(R.string.invite_link), stringResource(R.string.invite_link_desc), onOpenInvite) }
+        item { DashboardCard(stringResource(R.string.shop), stringResource(R.string.shop_desc), onOpenShop) }
 
         // Show role-specific panels only when allowed.
         if (account.role == UserRole.ADMIN) {
-            item { DashboardCard("Admin panel", "Manage orders, gifts, and discount codes", onOpenAdmin) }
+            item { DashboardCard(stringResource(R.string.admin_panel), stringResource(R.string.admin_panel_desc), onOpenAdmin) }
         }
         if (account.role == UserRole.COMPANY) {
-            item { DashboardCard("Company panel", "Manage employee events and company orders", onOpenCompany) }
+            item { DashboardCard(stringResource(R.string.company_panel), stringResource(R.string.company_panel_desc), onOpenCompany) }
         }
 
         item {
             Button(onClick = { AuthRepository.logout() }, modifier = Modifier.fillMaxWidth()) {
-                Text("Logout")
+                Text(stringResource(R.string.logout))
             }
         }
     }
