@@ -41,6 +41,11 @@ android {
     }
 }
 
+ksp {
+    // Room schema JSON, kept in version control because exportSchema is enabled.
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
